@@ -2,20 +2,20 @@ package be.krikkrok.twentyfive.day02
 
 import be.krikkrok.BaseAoc
 
-class Day02A01Test: BaseAoc() {
-    init {
-       val input = asString(getFile())
+class Day02A01Test : BaseAoc() {
+    override fun timedFun() {
+        val input = asString(getFile())
         var answer: Long = 0
-
+//19574776074
         input.split(",").forEach { product ->
             val ids = product.split("-")
             val range = ProductIdRange(ids[0].toLong(), ids[1].toLong())
 
-            (range.firstId .. range.secondId).forEach { id ->
+            (range.firstId..range.secondId).forEach { id ->
                 val currentId = id.toString()
-                if(currentId.length % 2 == 0){
+                if (currentId.length % 2 == 0) {
                     val split = splitInHalf(currentId)
-                    if(split.first == split.second){
+                    if (split.first == split.second) {
                         answer += currentId.toLong()
                     }
                 }
@@ -31,7 +31,7 @@ class Day02A01Test: BaseAoc() {
         return s.substring(0, mid) to s.substring(mid)
     }
 
-    override fun getRealFile(): String{
+    override fun getRealFile(): String {
         return "a01.txt"
     }
 
@@ -44,6 +44,6 @@ class Day02A01Test: BaseAoc() {
     }
 }
 
-fun main(args: Array<String>) {
+fun main() {
     Day02A01Test()
 }

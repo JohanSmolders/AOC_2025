@@ -5,11 +5,22 @@ import java.io.Reader
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import java.util.*
+import kotlin.time.measureTime
 
 abstract class BaseAoc {
-    fun asString(location: String): String = String(BaseAoc::class.java.getResourceAsStream(location).readAllBytes(), StandardCharsets.UTF_8);
 
-    fun asReader(location: String): Reader = BaseAoc::class.java.getResourceAsStream(location).reader()
+    init {
+        val time = measureTime { timedFun()
+
+         }
+        println("Ran $time")
+    }
+
+    abstract fun timedFun()
+
+    fun asString(location: String): String = String(BaseAoc::class.java.getResourceAsStream(location)!!.readAllBytes(), StandardCharsets.UTF_8)
+
+    fun asReader(location: String): Reader = BaseAoc::class.java.getResourceAsStream(location)!!.reader()
     fun asStringList(location: String): LinkedList<String> {
         val linkedList = LinkedList<String>()
         asReader(location).forEachLine {
@@ -20,7 +31,7 @@ abstract class BaseAoc {
 
     fun asIntList(location: String) = asStringList(location).map { it.toInt() }
 
-    fun asResource(location: String): URL = BaseAoc::class.java.getResource(location)
+    fun asResource(location: String): URL = BaseAoc::class.java.getResource(location)!!
 
     fun getTestFile() = "test.txt"
     abstract fun getRealFile(): String

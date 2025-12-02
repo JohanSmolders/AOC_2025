@@ -4,19 +4,19 @@ import be.krikkrok.BaseAoc
 import java.lang.Math.floorMod
 
 class Day01A02Test: BaseAoc() {
-    init {
+    override fun timedFun() {
 
         var position = 50
         var zeroCount = 0
         asStringList(getFile()).forEach { rotation ->
             when(rotation.take(1)){
                 "L" -> {
-                    var rotationResult = rotateFor(position, RotationSide.LEFT, rotation.drop(1).toInt())
+                    val rotationResult = rotateFor(position, RotationSide.LEFT, rotation.drop(1).toInt())
                     zeroCount += rotationResult.zeroClicks
                     position = rotationResult.finalPosition
                 }
                 "R" -> {
-                    var rotationResult = rotateFor(position, RotationSide.RIGHT, rotation.drop(1).toInt())
+                    val rotationResult = rotateFor(position, RotationSide.RIGHT, rotation.drop(1).toInt())
                     zeroCount += rotationResult.zeroClicks
                     position = rotationResult.finalPosition
                 }
@@ -60,6 +60,6 @@ class Day01A02Test: BaseAoc() {
     }
 }
 
-fun main(args: Array<String>) {
+fun main() {
     Day01A02Test()
 }

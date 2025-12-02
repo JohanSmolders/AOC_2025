@@ -1,13 +1,16 @@
 package be.krikkrok.twentyfive.day02
 
 import be.krikkrok.BaseAoc
+import kotlin.concurrent.atomics.AtomicLong
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
 class Day02A02Test : BaseAoc() {
-    init {
+    @OptIn(ExperimentalAtomicApi::class)
+    override fun timedFun()  {
         val input = asString(getFile())
-        var answer: Long = 0
+        val answer = AtomicLong(0)
 
-        input.split(",").forEach { product ->
+        input.split(",").parallelStream().forEach { product ->
             val ids = product.split("-")
             val range = ProductIdRange(ids[0].toLong(), ids[1].toLong())
 
@@ -16,7 +19,7 @@ class Day02A02Test : BaseAoc() {
                 for (i in currentId.length downTo 2) {
                     val parts = splitIntoParts(currentId, i)
                     if (parts?.distinct()?.size == 1) {
-                        answer += currentId.toLong()
+                        answer.addAndFetch(currentId.toLong())
                         break
                     }
                 }
@@ -47,6 +50,6 @@ class Day02A02Test : BaseAoc() {
     }
 }
 
-fun main(args: Array<String>) {
+fun main() {
     Day02A02Test()
 }
