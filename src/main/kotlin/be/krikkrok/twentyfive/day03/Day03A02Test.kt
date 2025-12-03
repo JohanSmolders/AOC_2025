@@ -2,18 +2,23 @@ package be.krikkrok.twentyfive.day03
 
 import be.krikkrok.BaseAoc
 
-class Day03A01Test : BaseAoc() {
+class Day03A02Test : BaseAoc() {
     override fun timedFun() {
         var answer: Long = 0
-
         asStringList(getFile()).forEach { bank ->
-            val subBank  = bank.dropLast(1)
-            val firstDigit = getMaxInt(subBank)
-            val secondDigit = getMaxInt(bank.substringAfter(firstDigit))
+            var bankLeft = bank
+            var subBank  = bankLeft.take(bank.length - 11)
+            var found = getMaxInt(subBank)
+            var selectedBank = found
 
-            answer = answer.plus("$firstDigit$secondDigit".toInt())
+            (2 .. 12).forEach { pass ->
+                bankLeft = bankLeft.substringAfter(found)
+                subBank = bankLeft.dropLast((12 - pass))
+                found = getMaxInt(subBank)
+                selectedBank += found
+             }
+            answer = answer.plus(selectedBank.toLong())
         }
-
 
         printResult("$answer")
     }
@@ -36,5 +41,5 @@ class Day03A01Test : BaseAoc() {
 }
 
 fun main() {
-    Day03A01Test()
+    Day03A02Test()
 }
